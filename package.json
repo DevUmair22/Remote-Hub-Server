@@ -1,0 +1,24 @@
+{
+	"name": "fyp-server",
+	"version": "1.0.0",
+	"description": "This is the server for RemoteHub. Basically, its a server of a FYP Project of BSSE presented by Umair Malik to Riphah International University.",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "nodemon index.js"
+	},
+	"keywords": [
+		"RemoteHub"
+	],
+	"author": "Malik Umair Awan",
+	"license": "ISC",
+	"dependencies": {
+		"crypto-js": "^4.1.1",
+		"dotenv": "^16.3.1",
+		"express": "^4.18.2",
+		"jsonwebtoken": "^9.0.2",
+		"mongodb": "^6.1.0",
+		"mongoose": "^7.5.3",
+		"nodemon": "^3.0.1"
+	}
+}
