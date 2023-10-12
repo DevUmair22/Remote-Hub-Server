@@ -3,11 +3,14 @@ const app = express()
 const mongoose = require('mongoose')
 const port = 8080
 require('dotenv/config');
+const userRoute = require('./routes/users');
+const authRoute = require('./routes/auth')
 
 //Middlewares
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
-
+app.use('/user', userRoute);
+app.use('/user/auth', authRoute);
 //DB Connection establisher
 mongoose.connect(process.env.DB_CONNECTION)
    .then(() => {
