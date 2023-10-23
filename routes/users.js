@@ -2,6 +2,33 @@ const router = require("express").Router();
 const User = require("../models/User");
 const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("./verifyToken");
 const CryptoJS = require("crypto-js")
+const Review = require('../models/Review')
+
+
+
+router.post('/reportUser', verifyTokenAndAuthorization, async (req, res) => {
+
+   try {
+      const Review = new Review({
+         reviewedUser: req.body.reviewedUser,
+         reviewedBy: req.body.reviewedBy,
+         rating: req.body.rating,
+         comment: req.body.comment
+
+      })
+
+
+
+      const savedReview = Review.save()
+      res.status(201).json(savedReview)
+
+   } catch (error) {
+      res.status(500).json(err)
+   }
+
+
+
+})
 
 
 //Update a User by ID

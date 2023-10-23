@@ -4,61 +4,61 @@ const EmployerProfileSchema = mongoose.Schema({
    name: {
       type: String,
    },
-   billingInfo: [
-      {
-         fullname: {
-            type: String,
-         },
-         companyName: {
-            type: String,
-         },
-         country: {
-            type: String,
-         },
-         state: {
-            type: String,
-         },
-         billingAddress: {
-            type: String,
-         },
-         city: {
-            type: String,
-         },
-         postalCode: {
-            type: String,
-         },
-         vat_number: {
-            type: String,
-         },
+   billingInfo:
+   {
+      fullname: {
+         type: String,
+      },
+      companyName: {
+         type: String,
+      },
+      country: {
+         type: String,
+      },
+      state: {
+         type: String,
+      },
+      billingAddress: {
+         type: String,
+      },
+      city: {
+         type: String,
+      },
+      postalCode: {
+         type: String,
+      },
+      vat_number: {
+         type: String,
+      },
 
 
-         cardInformation: [
-            {
-               cardNumber: {
-                  type: Number,
-                  required: true
-               },
-               exp: {
-                  type: String,
-                  required: true,
-               },
-               securityCode: {
-                  type: Number,
-                  required: true
-               },
-               firstName: {
-                  type: String,
-                  required: true,
-               },
-               lastName: {
-                  type: String,
-                  required: true,
-               },
+      cardInformation: [
+         {
+            cardNumber: {
+               type: Number,
+               required: true
+            },
+            exp: {
+               type: String,
+               required: true,
+            },
+            securityCode: {
+               type: Number,
+               required: true
+            },
+            firstName: {
+               type: String,
+               required: true,
+            },
+            lastName: {
+               type: String,
+               required: true,
+            },
 
-            }
-         ]
-      }
-   ],
+         }
+      ]
+   }
+   ,
    purchaseHistory: [
       {
          sellerId: {

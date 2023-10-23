@@ -1,7 +1,12 @@
 const express = require('express');
+const os = require('os');
+const cors = require('cors')
+const morgan = require('morgan')
 const app = express()
 const mongoose = require('mongoose')
 const port = 8080
+const requestLogger = morgan('tiny')
+const session = require('express-session');
 require('dotenv/config');
 const userRoute = require('./routes/users');
 const authRoute = require('./routes/auth')
@@ -9,9 +14,36 @@ const adminRoute = require('./routes/admin')
 
 
 
+// Find the local IP address dynamically
+const interfaces = os.networkInterfaces();
+let ipAddress = '';
+
+for (const interfaceName in interfaces) {
+   const interface = interfaces[interfaceName];
+   for (let i = 0; i < interface.length; i++) {
+      const { address, family, internal } = interface[i];
+      if (family === 'IPv4' && !internal) {
+         ipAddress = address;
+         break;
+      }
+   }
+   if (ipAddress) break;
+}
+
+
+
 //Middlewares
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(requestLogger)
+app.use(
+   session({
+      secret: 'your-secret-key', // Replace with a secure secret key
+      resave: false,
+      saveUninitialized: false,
+   })
+);
 app.use('/user', userRoute);
 app.use('/user/auth', authRoute);
 app.use('/admin', adminRoute);
@@ -24,7 +56,13 @@ mongoose.connect(process.env.DB_CONNECTION)
       console.log(err)
    })
 
-//To listen on the port
-app.listen(port, () => {
-   console.log(`Server started at http://localhost:${port}`)
-})
+// Check if an IP address was found
+if (ipAddress) {
+
+   //To listen on the port
+   app.listen(port, () => {
+      console.log(`Server started at http://${ipAddress}:${port}`);
+   });
+} else {
+   console.log('Unable to determine the local IP address.');
+}
