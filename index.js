@@ -11,6 +11,7 @@ require('dotenv/config');
 const userRoute = require('./routes/users');
 const authRoute = require('./routes/auth')
 const adminRoute = require('./routes/admin')
+const workerRoute = require('./routes/worker')
 
 
 
@@ -47,6 +48,7 @@ app.use(
 app.use('/user', userRoute);
 app.use('/user/auth', authRoute);
 app.use('/admin', adminRoute);
+app.use('/worker', workerRoute);
 
 //DB Connection establisher
 mongoose.connect(process.env.DB_CONNECTION)

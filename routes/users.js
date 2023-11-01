@@ -6,7 +6,7 @@ const Review = require('../models/Review')
 
 
 
-router.post('/reportUser', verifyTokenAndAuthorization, async (req, res) => {
+router.post('/reviewUser', verifyTokenAndAuthorization, async (req, res) => {
 
    try {
       const Review = new Review({
