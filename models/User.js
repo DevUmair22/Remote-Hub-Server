@@ -1,6 +1,35 @@
 const mongoose = require('mongoose')
 const UserSchema = mongoose.Schema({
+   workerProfile: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'WorkerProfile',
+   },
 
+   employerProfile: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'EmployerProfile',
+   },
+
+   reports: [
+      {
+         type: mongoose.Schema.Types.ObjectId,
+         ref: 'Reports',
+      }
+   ],
+
+   reviews: [
+      {
+         type: mongoose.Schema.Types.ObjectId,
+         ref: 'Review',
+      }
+   ],
+
+   workerPortfolios: [
+      {
+         type: mongoose.Schema.Types.ObjectId,
+         ref: 'WorkerPortfolio',
+      }
+   ],
    firstName: {
       type: String,
       required: true

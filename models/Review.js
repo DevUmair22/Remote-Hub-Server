@@ -1,6 +1,9 @@
 const mongoose = require("mongoose")
 const ReviewSchema = mongoose.Schema({
-
+   worker: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+   },
    reviewedUser: {
       type: String
    },

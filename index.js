@@ -1,13 +1,13 @@
 const express = require('express');
 const os = require('os');
-const cors = require('cors')
-const morgan = require('morgan')
+const cors = require('cors')      //cross-origin requests
+const morgan = require('morgan')       //to log request time taken
 const app = express()
-const mongoose = require('mongoose')
+const mongoose = require('mongoose')       // mongoDB driver
 const port = 8080
 const requestLogger = morgan('tiny')
 const session = require('express-session');
-require('dotenv/config');
+require('dotenv/config');             //environment file to store sensitive data
 const userRoute = require('./routes/users');
 const authRoute = require('./routes/auth')
 const adminRoute = require('./routes/admin')
@@ -15,7 +15,7 @@ const workerRoute = require('./routes/worker')
 
 
 
-// Find the local IP address dynamically
+// Find the local/external IP address dynamically
 const interfaces = os.networkInterfaces();
 let ipAddress = '';
 
@@ -40,7 +40,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(requestLogger)
 app.use(
    session({
-      secret: 'your-secret-key', // Replace with a secure secret key
+      secret: 'your-secret-key',
       resave: false,
       saveUninitialized: false,
    })
@@ -50,6 +50,9 @@ app.use('/user/auth', authRoute);
 app.use('/admin', adminRoute);
 app.use('/worker', workerRoute);
 
+
+
+
 //DB Connection establisher
 mongoose.connect(process.env.DB_CONNECTION)
    .then(() => {
@@ -58,7 +61,11 @@ mongoose.connect(process.env.DB_CONNECTION)
       console.log(err)
    })
 
-// Check if an IP address was found
+
+
+
+
+// if an IP address was found
 if (ipAddress) {
 
    //To listen on the port

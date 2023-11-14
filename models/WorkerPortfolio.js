@@ -2,7 +2,10 @@ const mongoose = require("mongoose")
 const WorkerPortfolioSchema = mongoose.Schema({
 
 
-
+   worker: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+   },
    projectName: {
       type: String
    },

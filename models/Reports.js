@@ -6,7 +6,8 @@ const ReportsSchema = mongoose.Schema({
       type: String
    },
    reportedUser: {
-      type: String
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
    },
    reportTitle: {
       type: String

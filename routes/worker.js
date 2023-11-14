@@ -74,3 +74,4 @@ router.put('reviews/update/: id', verifyTokenAndAuthorization, async (req, res) 
 
 })
 
+module.exports = router

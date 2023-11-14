@@ -1,5 +1,12 @@
 const mongoose = require('mongoose')
 const WorkerProfileSchema = mongoose.Schema({
+
+
+   user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+   },
+
    designation: {
       type: String,
    },
