@@ -3,6 +3,7 @@ const User = require("../models/User");
 const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("./verifyToken");
 const CryptoJS = require("crypto-js")
 const Review = require('../models/Review')
+const Withdraw = require('../models/Withdrawl')
 
 
 
@@ -51,6 +52,28 @@ router.put('/:id', verifyTokenAndAuthorization, async (req, res) => {
 
 
 });
+
+//Withdrawl Request 
+router.post('/withdrawl', verifyTokenAndAuthorization, async (req, res) => {
+   try {
+      const withdrawl = new Withdraw({
+         userId: req.user.id,
+         amount: req.body.amount,
+
+
+      })
+
+
+
+      const savedRequest = await withdrawl.save()
+      res.status(201).json(savedRequest)
+
+   } catch (error) {
+      res.status(500).json(err)
+   }
+
+})
+
 
 
 //Get ALL Users

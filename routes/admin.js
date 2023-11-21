@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const User = require("../models/User")
+const Withdrawl = require("../models/Withdrawl")
 const CryptoJS = require("crypto-js")
 const JWT = require("jsonwebtoken")
 const { verifyTokenAndAdmin } = require("./verifyToken");
@@ -63,12 +64,52 @@ router.get('/all', verifyTokenAndAdmin, async (req, res) => {
 });
 
 
+//Get All Withdrawl Requests
+router.get('/withdrawl/all', verifyTokenAndAdmin, async (req, res) => {
 
-router.post('/approve-withdrawl', verifyTokenAndAdmin, async (req, res) => {
+   try {
+      const requests = await Withdrawl.find();
+      res.status(200).json(requests)
+   } catch (err) {
+      res.status(500).json(err);
+   }
+});
 
 
 
 
-})
+//Approve/Disapprove withdrawl requests
+router.post('/withdrawl/:id', verifyTokenAndAdmin, async (req, res) => {
+   const withdrawalId = req.params.id;
+   console.log(withdrawalId)
+   try {
+      // Find the withdrawal request in the database
+      const withdrawal = await Withdrawl.findById(withdrawalId);
 
-module.exports = router
+      if (!withdrawal) {
+         return res.status(404).json({ message: 'Withdrawl not found.' });
+      }
+
+      // Approve or disapprove based on the request body
+      const action = req.body.action;
+
+      if (action === 'approve') {
+         withdrawal.status = 'approved';
+      } else if (action === 'disapprove') {
+         withdrawal.status = 'disapproved';
+      } else {
+         return res.status(400).json({ message: 'Invalid action.' });
+      }
+
+      // Save the updated withdrawal status
+      await withdrawal.save();
+
+      res.status(200).json({ message: `Withdrawal ${action}d successfully.` });
+   } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: error });
+   }
+});
+
+module.exports = router;
+
