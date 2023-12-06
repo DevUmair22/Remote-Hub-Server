@@ -72,6 +72,7 @@ router.get('/withdrawl/all', verifyTokenAndAdmin, async (req, res) => {
       res.status(200).json(requests)
    } catch (err) {
       res.status(500).json(err);
+      console.log(err)
    }
 });
 
@@ -93,9 +94,9 @@ router.post('/withdrawl/:id', verifyTokenAndAdmin, async (req, res) => {
       // Approve or disapprove based on the request body
       const action = req.body.action;
 
-      if (action === 'approve') {
+      if (action === 'Approved') {
          withdrawal.status = 'approved';
-      } else if (action === 'disapprove') {
+      } else if (action === 'Disapproved') {
          withdrawal.status = 'disapproved';
       } else {
          return res.status(400).json({ message: 'Invalid action.' });

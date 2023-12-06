@@ -103,10 +103,6 @@ const EmployerProfileSchema = mongoose.Schema({
          issueDescription: {
             type: String,
          },
-         status: {
-            type: String,
-            default: "unresolved"
-         }
       }
    ],
 

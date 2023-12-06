@@ -9,15 +9,16 @@ const { verifyTokenAndAuthorization } = require("./verifyToken");
 router.post('/register', async (req, res) => {
 
    try {
+      console.log("hitted")
       const user = new User(
          {
             firstName: req.body.firstName,
             lastName: req.body.lastName,
             password: CryptoJS.AES.encrypt(req.body.password, process.env.PASS_SEC).toString(),
             email: req.body.email,
-            phone_number: req.body.phone,
+            phone_number: req.body.phoneNumber,
             isAdmin: req.body.isAdmin,
-            role: req.body.role
+            role: req.body.roleType
          }
       )
 
@@ -43,6 +44,8 @@ router.post('/login', async (req, res) => {
       Originalpassword !== req.body.password && res.status(401).json("Wrong Credentials!");
       console.log("user", user)
       if (user) req.session.user = { username: user.firstName }
+
+
       const accessToken = JWT.sign({
          id: user._id,
          isAdmin: user.isAdmin,
@@ -52,7 +55,7 @@ router.post('/login', async (req, res) => {
          { expiresIn: "3d" }
       );
       const { password, ...others } = user._doc;
-      res.status(200).json({ userData: { ...others }, accessToken });
+      res.status(200).json({ userData: { ...others }, accessToken, message: "User logged in successfully" });
    } catch (error) {
       res.status(500).json({ message: error });
       console.error();
@@ -66,7 +69,7 @@ router.get('/logout', verifyTokenAndAuthorization, (req, res) => {
       if (err) {
          console.error(err);
       } else {
-         res.status(200).json({ message: "user logged out successfully" })
+         res.status(200).json({ message: "User logged out successfully" })
       }
 
    });

@@ -73,7 +73,6 @@ const WorkerProfileSchema = mongoose.Schema({
       },
    ],
    familiarTools: {
-
       type: Array,
    },
    achievements: [

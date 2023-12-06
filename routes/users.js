@@ -32,7 +32,7 @@ router.post('/reviewUser', verifyTokenAndAuthorization, async (req, res) => {
 })
 
 
-//Update a User by ID
+//Update a User by password by ID
 router.put('/:id', verifyTokenAndAuthorization, async (req, res) => {
 
    if (req.body.password) {
@@ -52,6 +52,26 @@ router.put('/:id', verifyTokenAndAuthorization, async (req, res) => {
 
 
 });
+
+
+//Update a User by ID
+router.put('/basic/:id', verifyTokenAndAuthorization, async (req, res) => {
+
+
+   try {
+      const updatedUser = await User.findByIdAndUpdate(req.params.id,
+         { $set: req.body },
+         { new: true }
+      );
+      res.status(200).json(updatedUser);
+   } catch (err) {
+      res.status(500).json(err);
+   }
+
+
+
+});
+
 
 //Withdrawl Request 
 router.post('/withdrawl', verifyTokenAndAuthorization, async (req, res) => {
