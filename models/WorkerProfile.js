@@ -84,7 +84,21 @@ const WorkerProfileSchema = mongoose.Schema({
             type: String,
          }
       }
-   ]
+   ], hiredBy: [
+      {
+         employerId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+         },
+         hireDate: {
+            type: Date,
+            default: Date.now,
+         },
+      },
+   ],
+
+
+
 })
 
 module.exports = mongoose.model('WorkerProfile', WorkerProfileSchema)

@@ -12,7 +12,7 @@ const userRoute = require('./routes/users');
 const authRoute = require('./routes/auth')
 const adminRoute = require('./routes/admin')
 const workerRoute = require('./routes/worker')
-
+const employerRoute = require('./routes/employer')
 
 
 // Find the local/external IP address dynamically
@@ -49,7 +49,7 @@ app.use('/user', userRoute);
 app.use('/user/auth', authRoute);
 app.use('/admin', adminRoute);
 app.use('/worker', workerRoute);
-
+app.use('/employer', employerRoute);
 
 
 

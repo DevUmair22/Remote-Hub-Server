@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/User");
-const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("./verifyToken");
+
+const { verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("./verifyToken");
 const CryptoJS = require("crypto-js")
 const Review = require('../models/Review')
 const Withdraw = require('../models/Withdrawl')
@@ -139,6 +140,6 @@ router.get('/stats', verifyTokenAndAdmin, async (req, res) => {
 
 
 
-router.post('report', verifyToken)
+// router.post('report', verifyToken)
 
 module.exports = router;

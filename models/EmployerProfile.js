@@ -87,7 +87,7 @@ const EmployerProfileSchema = mongoose.Schema({
    activeHirings:
    {
 
-      type: Number,
+      type: String,
 
 
 
@@ -106,6 +106,18 @@ const EmployerProfileSchema = mongoose.Schema({
       }
    ],
 
+   terminatedWorkers: [
+      {
+         workerId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+         },
+         terminationDate: {
+            type: Date,
+            default: Date.now,
+         },
+      },
+   ],
 
 
 
@@ -114,4 +126,4 @@ const EmployerProfileSchema = mongoose.Schema({
 
 })
 
-module.exports('EmployerProfile', EmployerProfileSchema)
+module.exports = mongoose.model('EmployerProfile', EmployerProfileSchema)

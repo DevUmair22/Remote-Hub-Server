@@ -4,9 +4,7 @@ const ReviewSchema = mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
    },
-   reviewedUser: {
-      type: String
-   },
+
    reviewedBy: {
       type: String
    },
