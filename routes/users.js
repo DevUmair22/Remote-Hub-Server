@@ -109,34 +109,6 @@ router.get('/', async (req, res) => {
    }
 });
 
-//Get User Stats
-router.get('/stats', verifyTokenAndAdmin, async (req, res) => {
-
-   const date = new Date();
-   const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));                 //date(date.set(todayDate.get-1))
-
-   try {
-      const data = await User.aggregate([
-         { $match: { createdAt: { $gte: lastYear } } },       //if last year it will store it in createdAt variable
-         {
-            $project: {
-               month: { $month: "$createdAt" },   //stores the number of month when created into month variable
-            },
-         },
-         {
-            $group: {
-               _id: "$month",                //returns json data of group ordered respectively with month number and total number of registrations in that month
-               total: { $sum: 1 },
-            },
-         },
-
-      ]);
-      res.status(200).json(data);           //status code 200 means ok 
-   } catch (err) {
-      res.status(500).json(err);                 //status code 500 means internal server error
-   }
-
-})
 
 
 

@@ -4,7 +4,7 @@ const Review = require("../models/Review")
 const { verifyTokenAndAuthorization } = require("./verifyToken");
 
 
-//-----------------------------------------Worker Review's Methods------------
+//---------------Worker Review's Methods------------
 
 //Get specific Reviews
 router.get('/reviews/:userId', async (req, res) => {
@@ -48,7 +48,7 @@ router.post('/reviews/addNew', verifyTokenAndAuthorization, async (req, res,) =>
 
 })
 
-//Update a Review
+//Update a Review--not using
 router.put('/reviews/update/: id', verifyTokenAndAuthorization, async (req, res) => {
 
    try {
@@ -73,37 +73,40 @@ router.put('/reviews/update/: id', verifyTokenAndAuthorization, async (req, res)
 //-----------------------------------------Worker Profile Methods------------
 
 //Create Worker Profile
-router.post('/newProfile', async (req, res) => {
+router.post('/newProfile', verifyTokenAndAuthorization, async (req, res) => {
    try {
-      console.log(req.body)
+      const userId = req.user.id;
+      console.log(req.body, userId)
+
       const profile = new WorkerProfile({
+         user: userId,
          designation: req.body.designation,
          about: req.body.about,
          location: req.body.location,
-         experience: [{
-            organizationName: req.body.organizationName,
-            totalExperience: req.body.totalExperience,
-            roles: [{
-               title: req.body.title,
-               fromTo: req.body.fromTo,
-               skillsInvolved: req.body.skillsInvolved,
-               roleDescription: req.body.roleDescription,
-            }],
-         }],
+         experience: req.body.experience.map((exp) => ({
+            organizationName: exp.organizationName,
+            totalExperience: exp.totalExperience,
+            roles: exp.roles.map((role) => ({
+               title: role.title,
+               fromTo: role.fromTo,
+               skillsInvolved: role.skillsInvolved,
+               roleDescription: role.roleDescription,
+            })),
+         })),
          skills: req.body.skills,
          portfolio: req.body.portfolio,
          earnings: req.body.earnings,
          projectHistory: req.body.projectHistory,
          languages: req.body.languages,
-         socialAccounts: [{
-            link: req.body.link,
-            verificationStatus: req.body.verificationStatus,
-         }],
+         socialAccounts: req.body.socialAccounts.map((account) => ({
+            link: account.link,
+            verificationStatus: account.verificationStatus,
+         })),
          familiarTools: req.body.familiarTools,
-         achievements: [{
-            title: req.body.title,
-            link: req.body.link,
-         }],
+         achievements: req.body.achievements.map((achievement) => ({
+            title: achievement.title,
+            link: achievement.link,
+         })),
       });
 
       const savedProfile = await profile.save();
@@ -114,7 +117,7 @@ router.post('/newProfile', async (req, res) => {
    }
 });
 
-//Get Worker Profile
+//Get Worker Profile by id
 router.get('/profile/:id', async (req, res) => {
 
    try {
@@ -127,6 +130,19 @@ router.get('/profile/:id', async (req, res) => {
    }
 
 
+})
+
+
+//Get Worker Profile
+router.get('/allWorkers', async (req, res) => {
+   try {
+      const worker =
+         await WorkerProfile.find();
+      res.status(200).json(worker)
+   } catch (error) {
+      res.json({ message: error })
+      console.log("error getting worker Profile")
+   }
 })
 
 //Update Worker profile
