@@ -118,6 +118,32 @@ router.post('/terminate-worker/:workerId', verifyTokenAndAuthorization, async (r
 });
 
 
+router.post('/addbilling', verifyTokenAndAuthorization, async (req, res) => {
+   try {
+      const userId = req.user.id;
+      if (!mongoose.Types.ObjectId.isValid(userId)) {
+         return res.status(400).json({ message: 'Invalid userId format' });
+      }
+      const employerProfile = await EmployerProfile.findOne({ user: userId });
 
+      if (!employerProfile) {
+         return res.status(404).json({ message: 'Employer profile not found' });
+      }
+
+
+      const billingInfo = req.body
+
+
+      employerProfile.billingInfo = billingInfo;
+
+
+      await employerProfile.save();
+
+      res.status(200).json({ message: 'Billing information added successfully' });
+   } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Internal Server Error' });
+   }
+});
 
 module.exports = router;

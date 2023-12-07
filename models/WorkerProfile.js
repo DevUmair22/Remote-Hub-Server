@@ -84,7 +84,8 @@ const WorkerProfileSchema = mongoose.Schema({
             type: String,
          }
       }
-   ], hiredBy: [
+   ],
+   hiredBy: [
       {
          employerId: {
             type: mongoose.Schema.Types.ObjectId,

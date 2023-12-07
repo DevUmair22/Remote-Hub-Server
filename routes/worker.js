@@ -133,6 +133,26 @@ router.get('/profile/:id', async (req, res) => {
 })
 
 
+
+
+//Search worker by role
+router.get('/profile/UserRole/:role', async (req, res) => {
+   try {
+      console.log("hit", req.params.role)
+      const { role } = req.params;
+      console.log("hit1", role)
+      const userRoleData = await WorkerProfile.find({ designation: role });
+      console.log("hit11", userRoleData)
+      res.status(200).json(userRoleData);
+   }
+   catch (e) {
+      res.json({ message: e })
+      console.log("error fetching workers profile", e)
+   }
+})
+
+
+
 //Get Worker Profile
 router.get('/allWorkers', async (req, res) => {
    try {
