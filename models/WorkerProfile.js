@@ -18,12 +18,13 @@ const WorkerProfileSchema = mongoose.Schema({
    },
    experience: [
       {
-         organizationName: {
-            type: String,
-         },
          toltalExperience: {
             type: String,
          },
+         organizationName: {
+            type: String,
+         },
+
          roles: [
             {
                title: {

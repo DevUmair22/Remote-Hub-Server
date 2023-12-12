@@ -123,10 +123,10 @@ router.get('/profile/:id', async (req, res) => {
    try {
       const worker =
          await WorkerProfile.findOne({ _id: req.params.id });
-      res.status(200).json(worker)                     //status code 200 means ok 
+      res.status(200).json(worker)
    } catch (error) {
       res.json({ message: error })
-      console.log("error getting worker Profile")                         //status code 500 means internal server error
+      console.log("error getting worker Profile")
    }
 
 
