@@ -10,6 +10,15 @@ const WorkerProfileSchema = mongoose.Schema({
    designation: {
       type: String,
    },
+   hourlyRate: {
+      type: String
+   },
+   totalJobs: {
+      type: Number
+   },
+   ratings: {
+      type: Number
+   },
    about: {
       type: String,
    },
@@ -18,7 +27,7 @@ const WorkerProfileSchema = mongoose.Schema({
    },
    experience: [
       {
-         toltalExperience: {
+         totalExperience: {
             type: String,
          },
          organizationName: {

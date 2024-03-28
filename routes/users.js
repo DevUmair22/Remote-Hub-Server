@@ -109,9 +109,20 @@ router.get('/', async (req, res) => {
    }
 });
 
+//Get Specific Users
+router.get('/:id', async (req, res) => {
+   const userId = req.params.id;
+   try {
+      const user =
+         await User.findById(userId);
+      res.status(200).json(user)                     //status code 200 means ok 
+   } catch (err) {
+      res.status(500).json(err);                             //status code 500 means internal server error
+   }
+});
 
 
 
-// router.post('report', verifyToken)
+
 
 module.exports = router;
